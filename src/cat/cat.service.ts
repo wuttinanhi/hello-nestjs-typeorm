@@ -30,4 +30,9 @@ export class CatService {
   async remove(id: number): Promise<void> {
     await this.catsRepository.delete(id);
   }
+
+  async existsById(id: number) {
+    const count = await this.catsRepository.count({ where: { id: id } });
+    return count >= 1;
+  }
 }

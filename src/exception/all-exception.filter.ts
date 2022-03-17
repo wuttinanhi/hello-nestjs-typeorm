@@ -3,13 +3,16 @@ import {
   Catch,
   ArgumentsHost,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { EntityNotFoundError } from 'typeorm';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
-  catch(exception: unknown, host: ArgumentsHost) {
+  private readonly logger = new Logger('Exception');
+
+  catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
@@ -21,6 +24,10 @@ export class AllExceptionFilter implements ExceptionFilter {
         timestamp: new Date().toISOString(),
       });
     }
+
+    this.logger.error(
+      `Error ${exception.name} at ${request.baseUrl} from ${request.ip}`,
+    );
 
     // TypeORM: entity not found error
     if (exception instanceof EntityNotFoundError) {

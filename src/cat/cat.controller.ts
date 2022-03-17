@@ -17,7 +17,7 @@ export class CatController {
 
   @Get('/')
   public index() {
-    return 'Hello cat route!' + test;
+    return 'Hello cat route!';
   }
 
   @Post('/create')
@@ -27,6 +27,11 @@ export class CatController {
     cat.age = createCatDto.age;
     cat.type = createCatDto.type;
     return this.catService.create(cat);
+  }
+
+  @Get('/all')
+  public all() {
+    return this.catService.findAll();
   }
 
   @Get('/get/:id')

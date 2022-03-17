@@ -8,5 +8,6 @@ import { CatService } from './cat.service';
   imports: [TypeOrmModule.forFeature([Cat])],
   controllers: [CatController],
   providers: [CatService],
+  exports: [CatService, TypeOrmModule],
 })
 export class CatModule {}
