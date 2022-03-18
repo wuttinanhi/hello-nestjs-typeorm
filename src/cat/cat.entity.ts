@@ -13,4 +13,7 @@ export class Cat {
 
   @Column()
   age: number;
+
+  @Column({ nullable: false, default: 'DEFAULT_V2' })
+  v2: string;
 }
